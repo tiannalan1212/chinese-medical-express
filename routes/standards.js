@@ -5,7 +5,9 @@ const db = require('../db')
 
 router.get('/', function (req, res, next) {
   console.log(req.query)
-  db.query(`SELECT * From standardRecipe WHERE name='${req.query.name}'`, (err, rows, fields) => {
+  const _name = !!req.query.name ? req.query.name : ''
+  const select = _name ? `SELECT * FROM standardRecipe WHERE name='${_name}'` : `SELECT * FROM standardRecipe`
+  db.query(select, (err, rows, fields) => {
     if (err) throw err
     console.log(rows)
     res.send(rows)
@@ -18,14 +20,11 @@ router.get('/', function (req, res, next) {
 
 router.post('/addStandardRecipe', (req, res, next) => {
 
-
-  // console.log('===============', req.body)
-  const id = '10001602'
   const name = req.body.name
-  const remark = !!req.body.remark ? `"${req.body.remark}"` : "sss"
-  const describe = !!req.body.describe ? `"${req.body.describe}"` : "lll"
-  // res.send('get')
-  db.query(`INSERT INTO standardRecipe ( name, remark ) VALUES ( "${name}", "${remark}" )`, (err, rows, fields) => {
+  const remark = !!req.body.remark ? req.body.remark : ""
+  const standard_describe = !!req.body.standard_describe ? req.body.standard_describe : ""
+
+  db.query(`INSERT INTO standardRecipe ( name, remark, standard_describe ) VALUES ( "${name}", "${remark}", "${standard_describe}" )`, (err, rows, fields) => {
     if (err) throw err
     // console.log(rows)
     res.send("success")
