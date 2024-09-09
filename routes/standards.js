@@ -2,33 +2,29 @@ var express = require('express');
 var app = express();
 var router = express.Router();
 const db = require('../db')
-
+const sql = require('../sql')
 router.get('/', function (req, res, next) {
-  console.log(req.query)
-  const _name = !!req.query.name ? req.query.name : ''
-  const select = _name ? `SELECT * FROM standardRecipe WHERE name='${_name}'` : `SELECT * FROM standardRecipe`
-  db.query(select, (err, rows, fields) => {
-    if (err) throw err
-    console.log(rows)
-    res.send(rows)
-  })
-
-
-  //res.send('respond with a resource');
-
+    // console.log(req.query)
+    // const _name = !!req.query.name ? req.query.name : ''
+    // const select = _name ? `SELECT * FROM standardRecipe WHERE name='${_name}'` : `SELECT * FROM standardRecipe`
+    db.query(sql.select("standardRecipe", req.query), (err, rows, fields) => {
+        if (err) throw err
+        console.log(rows)
+        res.send(rows)
+    })
 });
 
 router.post('/addStandardRecipe', (req, res, next) => {
 
-  const name = req.body.name
-  const remark = !!req.body.remark ? req.body.remark : ""
-  const standard_describe = !!req.body.standard_describe ? req.body.standard_describe : ""
+    const name = req.body.name
+    const remark = !!req.body.remark ? req.body.remark : ""
+    const standard_describe = !!req.body.standard_describe ? req.body.standard_describe : ""
 
-  db.query(`INSERT INTO standardRecipe ( name, remark, standard_describe ) VALUES ( "${name}", "${remark}", "${standard_describe}" )`, (err, rows, fields) => {
-    if (err) throw err
-    // console.log(rows)
-    res.send("success")
-  })
+    db.query(`INSERT INTO standardRecipe ( name, remark, standard_describe ) VALUES ( "${name}", "${remark}", "${standard_describe}" )`, (err, rows, fields) => {
+        if (err) throw err
+        // console.log(rows)
+        res.send("success")
+    })
 })
 
 module.exports = router;
