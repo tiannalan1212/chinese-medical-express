@@ -14,19 +14,26 @@ dataBase.select = (table, query) => {
     delete query.current
     delete query.pageSize
     delete query.orderBy
-    console.log(query)
+    //console.log(query)
 
-    if (!!query && Object.keys(query).length != 0) {
-        sql = sql + " WHERE "
+    if (!!query && Object.keys(query).length > 0) {
+
+        let yx = 0;
+        let _sql = "";
+
         for (let key in query) {
-            if (typeof (query[key]) == "string") {
-                `${key} =“${query[key]}”`
-            } else {
-                `${key} = ${query[key]}`
+            if (typeof (query[key]) == "string" && query[key] != '' && query[key] != 'undefined') {
+                _sql=_sql+` ${key} = "${query[key]}"`
+                yx++
+            } else if (typeof (query[key]) == "number"){
+                _sql = _sql +` ${key} = ${query[key]}`
+                yx++
             }
         }
+        if (yx > 0) {
+            sql = sql + " WHERE " +_sql
+        }
     }
-
     if (!!_orderBy) {
         sql = sql + ` ORDER BY ${_orderBy} DESC`
     }
@@ -34,11 +41,16 @@ dataBase.select = (table, query) => {
         let n = _pageSize * (_current - 1)
         sql = sql + ` LIMIT ${_pageSize} OFFSET ${n}`
     }
-    console.log(sql)
+    //console.log(sql)
     return sql
 }
 
 
+//总数查询
+dataBase.count = (table) => {
+
+    return `SELECT COUNT(*) FROM ${table}`
+}
 
 //详情查询
 //插入
