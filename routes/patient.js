@@ -4,7 +4,7 @@ var router = express.Router();
 const db = require('../db')
 const sql = require('../sql')
 
-router.get('/', function (req, res, next) {
+router.get('/getList', function (req, res, next) {
     //console.log(req.query)
 
     let total = null;
@@ -23,4 +23,11 @@ router.get('/', function (req, res, next) {
     })
 });
 
+router.get('/getPatient', function (req, res, next) {
+    //console.log(req.query)
+    db.query(sql.select("patient", req.query), (err, rows, fields) => {
+        if (err) throw err
+        res.send(rows)
+    })
+})
 module.exports = router;

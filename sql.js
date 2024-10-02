@@ -1,9 +1,8 @@
 //封装数据库接口
 let dataBase = {}
 
-//列表查询
+//查询
 'SELECT * FROM patient WHERE sex="1" ORDER BY create_time DESC LIMIT 2 OFFSET 0 '
-
 dataBase.select = (table, query) => {
     let sql = `SELECT * FROM ${table}`
 
@@ -44,15 +43,11 @@ dataBase.select = (table, query) => {
     //console.log(sql)
     return sql
 }
-
-
 //总数查询
 dataBase.count = (table) => {
 
     return `SELECT COUNT(*) FROM ${table}`
 }
-
-//详情查询
 //插入
 //更新
 //删除
