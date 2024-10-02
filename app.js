@@ -4,15 +4,15 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var db = require('./db') //ÒıÈëÊı¾İ¿âÁ´½Ó
+var db = require('./db') //å¼•å…¥æ•°æ®åº“è¿æ¥
 
 var app = express();
 
 
-//ÒıÈëÂ·ÓÉ
+//å¼•å…¥è·¯ç”±
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var standards = require('./routes/standards');
+var recipe = require('./routes/recipe');
+var standard = require('./routes/standard');
 var patient = require('./routes/patient')
 
 // view engine setup
@@ -26,10 +26,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-//×¢²áÂ·ÓÉ
+//×¢æ³¨å†Œè·¯ç”±
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/api/standards', standards);
+app.use('/recipe', recipe);
+app.use('/api/standard', standard);
 app.use('/api/patient', patient)
 
 
