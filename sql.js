@@ -22,15 +22,15 @@ dataBase.select = (table, query) => {
 
         for (let key in query) {
             if (typeof (query[key]) == "string" && query[key] != '' && query[key] != 'undefined') {
-                _sql=_sql+` ${key} = "${query[key]}"`
+                _sql = _sql + ` ${key} = "${query[key]}"`
                 yx++
-            } else if (typeof (query[key]) == "number"){
-                _sql = _sql +` ${key} = ${query[key]}`
+            } else if (typeof (query[key]) == "number") {
+                _sql = _sql + ` ${key} = ${query[key]}`
                 yx++
             }
         }
         if (yx > 0) {
-            sql = sql + " WHERE " +_sql
+            sql = sql + " WHERE " + _sql
         }
     }
     if (!!_orderBy) {
@@ -49,6 +49,30 @@ dataBase.count = (table) => {
     return `SELECT COUNT(*) FROM ${table}`
 }
 //²åÈë
+// INSERT INTO standardRecipe ( name, remark, standard_describe ) VALUES ( "c", "b", "a" )
+dataBase.add = (table, query) => {
+    let sql = `INSERT INTO ${table} (`
+    let zd = ""
+    let z = ""
+    for (let key in query) {
+        if (query[key] != '' && query[key] != 'undefined') {
+            zd = zd + `${key},`
+        }
+    }
+    //zd = zd.substring(0, zd.length - 1)
+    sql = sql + zd + "create_time" + ") VALUES ("
+    for (let key in query) {
+        if (typeof (query[key]) == "string" && query[key] != '' && query[key] != 'undefined') {
+            z = z + `"${query[key]}",`
+        } else if (typeof (query[key]) == "number") {
+            z = z + `${query[key]},`
+        }
+    }
+    //z = z.substring(0, z.length - 1)
+    sql = sql + z + new Date().getTime() + ")"
+    //console.log(sql)
+    return sql
+}
 //¸üÐÂ
 //É¾³ý
 
