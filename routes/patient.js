@@ -38,6 +38,13 @@ router.post('/addPatient', function (req, res, next) {
         res.send("success")
     })
 })
+router.post('/updatePatient', function (req, res, next) {
+    //console.log(req.body)
 
+    db.query(sql.update("patient", req.body), (err, rows, fields) => {
+        if (err) throw err
+        res.send("success")
+    })
+})
 
 module.exports = router;

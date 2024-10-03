@@ -73,7 +73,29 @@ dataBase.add = (table, query) => {
     //console.log(sql)
     return sql
 }
+
+//UPDATE standard SET name = "a", remark = "n", standard_describe = "c" WHERE id = "${id}"`
 //¸üÐÂ
-//É¾³ý
+dataBase.update = (table, query) => {
+
+    let _sql = `UPDATE ${table} SET `
+    let _id = query.id
+
+    delete query.id
+    for (let key in query) {
+        if (typeof (query[key]) == "string" && query[key] != '' && query[key] != 'undefined') {
+
+            _sql = _sql + ` ${key} = "${query[key]}" ,`
+
+        } else if (typeof (query[key]) == "number") {
+
+            _sql = _sql + ` ${key} = ${query[key]} ,`
+
+        }
+    }
+    _sql = _sql.substring(0, _sql.length - 1) + `WHERE id = "${_id}"`
+
+    return _sql
+}
 
 module.exports = dataBase;
