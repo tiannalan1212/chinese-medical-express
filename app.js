@@ -26,9 +26,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-//ע注册路由
+//注册路由
 app.use('/', indexRouter);
-app.use('/recipe', recipe);
+app.use('/api/recipe', recipe);
 app.use('/api/standard', standard);
 app.use('/api/patient', patient)
 
