@@ -22,7 +22,6 @@ router.get('/getList', function (req, res, next) {
         //    res.send('success')
     })
 });
-
 router.get('/getPatient', function (req, res, next) {
     //console.log(req.query)
     db.query(sql.select("patient", req.query), (err, rows, fields) => {
@@ -30,4 +29,22 @@ router.get('/getPatient', function (req, res, next) {
         res.send(rows)
     })
 })
+
+router.post('/addPatient', function (req, res, next) {
+    //console.log(req.body)
+
+    db.query(sql.add("patient", req.body), (err, rows, fields) => {
+        if (err) throw err
+        res.send("success")
+    })
+})
+router.post('/updatePatient', function (req, res, next) {
+    //console.log(req.body)
+
+    db.query(sql.update("patient", req.body), (err, rows, fields) => {
+        if (err) throw err
+        res.send("success")
+    })
+})
+
 module.exports = router;

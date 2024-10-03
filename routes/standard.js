@@ -36,15 +36,11 @@ router.get('/getStandard', function (req, res, next) {
 // 新增标准方剂
 router.post('/addStandard', (req, res, next) => {
 
-    const name = req.body.name
-    const remark = !!req.body.remark ? req.body.remark : ""
-    const standard_describe = !!req.body.standard_describe ? req.body.standard_describe : ""
-
-    db.query(`INSERT INTO standard ( name, remark, standard_describe ) VALUES ( "${name}", "${remark}", "${standard_describe}" )`, (err, rows, fields) => {
+    db.query(sql.add("standard", req.body), (err, rows, fields) => {
         if (err) throw err
-        // console.log(rows)
         res.send("success")
     })
+
 })
 
 // 编辑标准方剂
