@@ -1,7 +1,7 @@
-//·â×°Êý¾Ý¿â½Ó¿Ú
+// å°è£…æ•°æ®åº“æŽ¥å£
 let dataBase = {}
 
-//²éÑ¯
+// æŸ¥è¯¢
 'SELECT * FROM patient WHERE sex="1" ORDER BY create_time DESC LIMIT 2 OFFSET 0 '
 dataBase.select = (table, query) => {
     let sql = `SELECT * FROM ${table}`
@@ -43,12 +43,12 @@ dataBase.select = (table, query) => {
     //console.log(sql)
     return sql
 }
-//×ÜÊý²éÑ¯
+// æ€»æ•°æŸ¥è¯¢
 dataBase.count = (table) => {
 
     return `SELECT COUNT(*) FROM ${table}`
 }
-//²åÈë
+// æ’å…¥
 // INSERT INTO standardRecipe ( name, remark, standard_describe ) VALUES ( "c", "b", "a" )
 dataBase.add = (table, query) => {
     let sql = `INSERT INTO ${table} (`
@@ -75,7 +75,7 @@ dataBase.add = (table, query) => {
 }
 
 //UPDATE standard SET name = "a", remark = "n", standard_describe = "c" WHERE id = "${id}"`
-//¸üÐÂ
+// æ›´æ–°
 dataBase.update = (table, query) => {
 
     let _sql = `UPDATE ${table} SET `

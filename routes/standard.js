@@ -44,18 +44,12 @@ router.post('/addStandard', (req, res, next) => {
 })
 
 // 编辑标准方剂
-router.put('/updateStandard', (req, res, next) => {
+router.put('/updateStandard', function (req, res, next) {
+    //console.log(req.body)
 
-    const id = req.body.id
-    const name = req.body.name
-    const remark = !!req.body.remark ? req.body.remark : ""
-    const standard_describe = !!req.body.standard_describe ? req.body.standard_describe : ""
-ç
-    db.query(`UPDATE standard SET name = "${name}", remark = "${remark}", standard_describe = "${standard_describe}" WHERE id = "${id}"`, (err, rows, fields) => {
+    db.query(sql.update("standard", req.body), (err, rows, fields) => {
         if (err) throw err
-        // console.log(rows)
         res.send("success")
     })
 })
-
 module.exports = router;

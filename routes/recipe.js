@@ -25,7 +25,7 @@ router.get('/getList', function (req, res, next) {
     })
   });
 
-  // 标准方剂详情
+  // 处方详情
 router.get('/getRecipe', function (req, res, next) {
     //console.log(req.query)
     db.query(sql.select("recipe", req.query), (err, rows, fields) => {
@@ -34,35 +34,24 @@ router.get('/getRecipe', function (req, res, next) {
     })
   })
   
-  // 新增标准方剂
-  router.post('/addRecipe', (req, res, next) => {
+  // 新增处方
+    router.post('/addRecipe', (req, res, next) => {
+
+        db.query(sql.add("recipe", req.body), (err, rows, fields) => {
+            if (err) throw err
+            res.send("success")
+        })
+
+    })
   
-      const name = req.body.name
-      const remark = !!req.body.remark ? req.body.remark : ""
-      const standard_describe = !!req.body.standard_describe ? req.body.standard_describe : ""
-  
-      db.query(`INSERT INTO recipe ( name, remark, standard_describe ) VALUES ( "${name}", "${remark}", "${standard_describe}" )`, (err, rows, fields) => {
-          if (err) throw err
-          // console.log(rows)
-          res.send("success")
-      })
-  })
-  
-  // 编辑标准方剂
-  router.put('/updateRecipe', (req, res, next) => {
-  
-      const id = req.body.id
-      const narrative = !!req.body.narrative ? req.body.narrative : ""
-      const diagnosis = !!req.body.diagnosis ? req.body.diagnosis : ""
-      const recipe_content = !!req.body.recipe_content ? req.body.recipe_content : ""
-      const num = !!req.body.num ? req.body.num : ""
-      const note = !!req.body.note ? req.body.note : ""
-  
-      db.query(`UPDATE recipe SET narrative = "${narrative}", diagnosis = "${diagnosis}", recipe_content = "${recipe_content}", num = ${num}, note="${note}" WHERE id = "${id}"`, (err, rows, fields) => {
-          if (err) throw err
-          // console.log(rows)
-          res.send("success")
-      })
-  })
+  // 编辑处方
+  router.put('/updateRecipe', function (req, res, next) {
+    //console.log(req.body)
+
+    db.query(sql.update("recipe", req.body), (err, rows, fields) => {
+        if (err) throw err
+        res.send("success")
+    })
+})
 
 module.exports = router;
