@@ -55,7 +55,7 @@ dataBase.add = (table, query) => {
     let zd = ""
     let z = ""
     for (let key in query) {
-        if (query[key] != '' && query[key] != 'undefined') {
+        if (query[key] !== '' && query[key] !== 'undefined') {
             zd = zd + `${key},`
         }
     }
