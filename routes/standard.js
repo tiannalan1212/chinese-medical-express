@@ -10,7 +10,7 @@ router.get('/getList', function (req, res, next) {
 
   let total = null;
 
-  db.query(sql.count("standard"), (err, rows, fields) => {
+    db.query(sql.count("standard", req.query), (err, rows, fields) => {
       if (err) throw err
       //console.log(rows[0]['COUNT(*)'])
       total = rows[0]['COUNT(*)']

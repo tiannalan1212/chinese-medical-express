@@ -35,6 +35,8 @@ dataBase.select = (table, query) => {
     }
     if (!!_orderBy) {
         sql = sql + ` ORDER BY ${_orderBy} DESC`
+    } else {
+        sql = sql + ` ORDER BY create_time DESC`
     }
     if (!!_current && !!_pageSize) {
         let n = _pageSize * (_current - 1)
@@ -44,9 +46,34 @@ dataBase.select = (table, query) => {
     return sql
 }
 // 总数查询
-dataBase.count = (table) => {
+dataBase.count = (table,query) => {
 
-    return `SELECT COUNT(*) FROM ${table}`
+    let sql = `SELECT COUNT(*) FROM ${table}`
+
+    delete query.current
+    delete query.pageSize
+    delete query.orderBy
+
+    if (!!query && Object.keys(query).length > 0) {
+
+        let yx = 0;
+        let _sql = "";
+
+        for (let key in query) {
+            if (typeof (query[key]) == "string" && query[key] != '' && query[key] != 'undefined') {
+                _sql = _sql + ` ${key} = "${query[key]}"`
+                yx++
+            } else if (typeof (query[key]) == "number") {
+                _sql = _sql + ` ${key} = ${query[key]}`
+                yx++
+            }
+        }
+        if (yx > 0) {
+            sql = sql + " WHERE " + _sql
+        }
+    }
+    
+    return sql
 }
 // 插入
 // INSERT INTO standardRecipe ( name, remark, standard_describe ) VALUES ( "c", "b", "a" )
