@@ -37,11 +37,13 @@ router.get('/getRecipe', function (req, res, next) {
   // 新增处方
     router.post('/addRecipe', (req, res, next) => {
 
-        db.query(sql.add("recipe", req.body), (err, rows, fields) => {
-            if (err) throw err
-            res.send("success")
-        })
-
+            db.query(sql.add("recipe", req.body), (err, rows, fields) => {
+                if(err){
+                    res.send(err)
+                }else
+                res.send("success")
+            })
+       
     })
   
   // 编辑处方
