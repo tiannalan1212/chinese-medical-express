@@ -11,13 +11,13 @@ router.get('/getList', function (req, res, next) {
   
     let total = null;
   
-    db.query(sql.count("recipe", req.query), (err, rows, fields) => {
+    db.query(sql.count("recipe", {...req.query}), (err, rows, fields) => {
         if (err) throw err
         //console.log(rows[0]['COUNT(*)'])
         total = rows[0]['COUNT(*)']
     })
   
-    db.query(sql.select("recipe", req.query), (err, rows, fields) => {
+    db.query(sql.select("recipe", {...req.query}), (err, rows, fields) => {
         if (err) throw err
         // console.log(rows)
         res.send({ table: rows, total: total })
@@ -28,7 +28,7 @@ router.get('/getList', function (req, res, next) {
   // 处方详情
 router.get('/getRecipe', function (req, res, next) {
     //console.log(req.query)
-    db.query(sql.select("recipe", req.query), (err, rows, fields) => {
+    db.query(sql.select("recipe", {...req.query}), (err, rows, fields) => {
         if (err) throw err
         res.send(rows)
     })

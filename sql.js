@@ -5,10 +5,15 @@ let dataBase = {}
 'SELECT * FROM patient WHERE sex="1" ORDER BY create_time DESC LIMIT 2 OFFSET 0 '
 dataBase.select = (table, query) => {
     let sql = `SELECT * FROM ${table}`
+    //console.log(query)
 
     let _current = query.current
     let _pageSize = query.pageSize
     let _orderBy = query.orderBy
+
+    // console.log(_current)
+    // console.log('.......')
+    // console.log(_pageSize)
 
     delete query.current
     delete query.pageSize
