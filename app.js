@@ -14,6 +14,8 @@ var indexRouter = require('./routes/index');
 var recipe = require('./routes/recipe');
 var standard = require('./routes/standard');
 var patient = require('./routes/patient')
+var medical = require('./routes/medical')
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,6 +33,7 @@ app.use('/', indexRouter);
 app.use('/api/recipe', recipe);
 app.use('/api/standard', standard);
 app.use('/api/patient', patient)
+app.use('/api/medical', medical)
 
 
 // catch 404 and forward to error handler
