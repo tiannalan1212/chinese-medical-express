@@ -83,28 +83,28 @@ dataBase.count = (table,query) => {
 // 插入
 // INSERT INTO standardRecipe ( name, remark, standard_describe ) VALUES ( "c", "b", "a" )
 dataBase.add = (table, query) => {
-    let sql = `INSERT INTO ${table} (`
-    let zd = ""
-    let z = ""
+    let fields = []
+    let values = []
+
     for (let key in query) {
-        if (query[key] !== '' && query[key] !== 'undefined') {
-            zd = zd + `${key},`
+        if (query[key] !== '' && query[key] !== undefined && query[key] !== 'undefined') {
+            fields.push(key)
+            if (typeof query[key] === "string") {
+                values.push(`"${query[key]}"`)
+            } else {
+                values.push(query[key])
+            }
         }
     }
-    //zd = zd.substring(0, zd.length - 1)
-    sql = sql + zd + "create_time" + ") VALUES ("
-    for (let key in query) {
-        if (typeof (query[key]) == "string" && query[key] != '' && query[key] != 'undefined') {
-            z = z + `"${query[key]}",`
-        } else if (typeof (query[key]) == "number") {
-            z = z + `${query[key]},`
-        }
-    }
-    //z = z.substring(0, z.length - 1)
-    sql = sql + z + new Date().getTime() + ")"
-    //console.log(sql)
+
+    fields.push("create_time")
+    values.push(new Date().getTime())
+
+    const sql = `INSERT INTO ${table} (${fields.join(",")}) VALUES (${values.join(",")})`
+    console.log(sql)
     return sql
 }
+
 
 //UPDATE standard SET name = "a", remark = "n", standard_describe = "c" WHERE id = "${id}"`
 // 更新
